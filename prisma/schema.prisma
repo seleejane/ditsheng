@@ -1,0 +1,32 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Record {
+  id        String   @id
+  text      String
+  amount    Float
+  category  String   @default("Other")
+  date      DateTime @default(now())
+  userId    String
+  createdAt DateTime @default(now())
+  User      User     @relation(fields: [userId], references: [clerkUserId], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model User {
+  id          String   @id
+  clerkUserId String   @unique
+  email       String   @unique
+  name        String?
+  imageUrl    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime
+  Record      Record[]
+}
