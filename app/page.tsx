@@ -1,38 +1,53 @@
+"use client";
+
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { Spotlight } from "@/components/ui/spotlight";
+import Intro from "./components/intro"
+import {motion} from "framer-motion"
+import Navbar from "./components/navbar";
+import { Globe3DDemo } from "./components/threedglobe";
+
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between">
-      <div className="relative flex w-full h-screen overflow-hidden rounded-md bg-gray-100/[0.88] antialiased md:items-center md:justify-center">
-      <div
-        className={cn(
-          "pointer-events-none absolute inset-0 [background-size:40px_40px] select-none",
-          "[background-image:linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)]",
-        )}
-      />
- 
-      <Spotlight
-        className="-top-40 left-0 md:-top-20 md:left-10"
-        fill="black"
-      />
-      <Spotlight
-        className="-top-20 left-0 md:top-10 md:left-20"
-        fill="blue"
-      />
-      <div className="relative z-10 mx-auto w-full max-w-7xl p-4 pt-20 md:pt-0">
-        <h1 className="bg-opacity-50 bg-gradient-to-b from-blue-950 to-neutral-400 bg-clip-text text-center text-4xl font-bold text-transparent md:text-7xl">
-          Spotlight <br /> is the new trend.
-        </h1>
-        <p className="mx-auto mt-4 max-w-lg text-center text-base font-normal text-blue-900">
-          Spotlight effect is a great way to draw attention to a specific part
-          of the page. Here, we are drawing the attention towards the text
-          section of the page. I don&apos;t know why but I&apos;m running out of
-          copy.
-        </p>
-      </div>
-    </div>
+    <main className="border-gray-200">
+      <Navbar />
+      <Spotlight className="absolute top-0 left-0 w-full h-full text-gray-300 dark:text-gray-800 opacity-20" />
+      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-blue-300/50 to-transparent" />
+
+      <section
+        id="introduction"
+        className="relative flex flex-col-reverse md:flex-row items-center justify-between 
+                   gap-12 max-w-7xl mx-auto px-6 py-5 h-screen"
+      >
+        <Intro />
+
+        {/* Animated Image Side */}
+        <motion.div
+          initial={{ opacity: 0, x: 40 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.9 }}
+          className="relative flex-1"
+        >
+          {/* Glow Background */}
+          <div className="absolute -z-10 inset-0 bg-blue-400/20 blur-3xl rounded-full"></div>
+
+          <motion.div
+            animate={{ y: [0, -10, 0] }}
+            transition={{
+              duration: 6,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="rounded-2xl shadow-2xl overflow-hidden"
+          >
+           
+            <Globe3DDemo />
+          </motion.div>
+        </motion.div>
+      </section>
+
     </main>
   );
 }
