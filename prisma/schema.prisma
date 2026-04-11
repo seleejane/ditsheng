@@ -6,26 +6,99 @@ datasource db {
   provider = "postgresql"
 }
 
-model Record {
-  id        String   @id
-  text      String
-  amount    Float
-  category  String   @default("Other")
-  date      DateTime @default(now())
-  userId    String
-  createdAt DateTime @default(now())
-  User      User     @relation(fields: [userId], references: [clerkUserId], onDelete: Cascade)
-
-  @@index([userId])
-}
-
 model User {
-  id          String   @id
+  id          String   @id @default(uuid())
   clerkUserId String   @unique
   email       String   @unique
-  name        String?
+  firstName   String?
+  lastName    String?
   imageUrl    String?
   createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  Sessions    Sessions[]
+  KYC         KYC[]
+  MembershipApplications MembershipApplications[]
+  MembershipApplicationReviewer MembershipApplicationReviewer[]
+  EmploymentDetails EmploymentDetails[]
+}
+
+model Roles {
+  id          String   @id
+  name        String   @unique
+  description String?
+  createdAt   DateTime @default(now())
   updatedAt   DateTime
-  Record      Record[]
+}
+
+model KYC {
+  id          String   @id
+  applicationId String   @unique
+  nationalId   String   @unique
+  dateOfBirth  DateTime
+  gender       String
+  maritalStatus String
+  nationality    String
+  phoneNumber   String
+  alternativePhoneNumber String?
+  residentialAddress String
+  city          String
+  postalCode    String
+  nextOfKin     String
+  nextOfKinPhoneNumber String
+  nextOfKinRelationship String
+  documentUrl String
+  status      String   @default("pending")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime
+  userId      String
+  User        User     @relation(fields: [userId], references: [clerkUserId], onDelete: Cascade)
+}
+
+model MembershipApplications {
+  id  String @id
+  userId String
+  status String @default("pending")
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+  submissionDate DateTime @default(now())
+  reviewDate DateTime?
+  reviewerId String?
+  Reviewer User?  @relation(fields: [reviewerId], references: [clerkUserId], onDelete: SetNull)
+  MembershipApplicationReviewer MembershipApplicationReviewer[]
+}
+
+model MembershipApplicationReviewer {
+  id String @id
+  membershipApplicationId String
+  reviewerId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+  MembershipApplications MembershipApplications @relation(fields: [membershipApplicationId], references: [id], onDelete: Cascade)
+  Reviewer User @relation(fields: [reviewerId], references: [clerkUserId], onDelete: SetNull)
+}
+
+model EmploymentDetails {
+  id String @id
+  userId String
+  employerName String
+  location String
+  jobTitle String
+  monthlyIncome Float
+  startDate DateTime
+  endDate DateTime?
+  workingStatus String @default("Contract")
+  workPhoneNumber String
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+  User User @relation(fields: [userId], references: [clerkUserId], onDelete: Cascade)
+}
+
+model Sessions{
+  id  String @id
+  userId String
+  clerkSessionId String @unique
+  ipAddress     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+  User User @relation(fields: [userId], references: [clerkUserId], onDelete: Cascade)
 }

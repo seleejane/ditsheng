@@ -19,9 +19,9 @@ export default function DashboardNav() {
   if (!mounted) return null
 
   const navItems = [
-    { name: "Membership", href: "#" },
-    { name: "Active Schemes", href: "#" },
-    { name: "Contact Support", href: "#" },
+    { name: "Membership", href: "/dashboard/membership" },
+    { name: "Active Schemes", href: "/dashboard/active-schemes" },
+    { name: "Contact Support", href: "/dashboard/contact-support" },
   ]
 
   return (   
@@ -39,7 +39,7 @@ export default function DashboardNav() {
                   className="relative px-4 py-2 rounded-lg 
                   transition-all duration-300 
                   hover:bg-white/60 dark:hover:bg-white/40 
-                  hover:shadow-md"
+                  hover:shadow-md "
                 >
                   {item.name}
                 </Link>
