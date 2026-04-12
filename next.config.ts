@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
     domains: ["img.clerk.com"],
   },
   experimental: {
-    serverActions: true,
+    //serverActions: true,
   },
 };
 
