@@ -19,9 +19,9 @@ export default function DashboardNav() {
   if (!mounted) return null
 
   const navItems = [
-    { name: "Membership", href: "/dashboard/membership" },
-    { name: "Active Schemes", href: "/dashboard/active-schemes" },
-    { name: "Contact Support", href: "/dashboard/contact-support" },
+    { name: "Customer Relationship", href: "/dashboard/customer-relationship" },
+    { name: "IT Support", href: "/dashboard/it-support" },
+    { name: "Head Office", href: "/dashboard/head-office" },
   ]
 
   return (   

@@ -30,12 +30,12 @@ export default async function RootLayout({
   <div className="flex w-full">
     
     {/* ✅ Fixed Sidebar */}
-    <div className="fixed top-0 left-0 h-screen w-64 z-40 bg-white dark:bg-gray-900">
+    <div className="lg:fixed top-0 left-0 h-screen w-64 z-40 bg-white dark:bg-gray-900">
       <Sidebar3 />
     </div>
 
     {/* ✅ Main Content (push it right) */}
-    <div className="ml-64 w-full">
+    <div className="lg:ml-64 w-full">
       {children}
     </div>
 
