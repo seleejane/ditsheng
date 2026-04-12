@@ -1,18 +1,6 @@
 import React from 'react'
 import Sidebar3 from '../../components/Sidebar3';
-/* 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <div className="flex flex-col lg:flex-row  justify-between w-full">
-    <Sidebar3 />
-      {children}
-    </div>
-  );
-} */
+
 
 // app/(protected)/layout.tsx
 import { auth, currentUser } from "@clerk/nextjs/server"
@@ -39,8 +27,18 @@ export default async function RootLayout({
   await syncUser()
 
   return (
-  <div className="flex flex-col lg:flex-row  justify-between w-full">
-    <Sidebar3 />
-    {children}
-  </div>);
+  <div className="flex w-full">
+    
+    {/* ✅ Fixed Sidebar */}
+    <div className="fixed top-0 left-0 h-screen w-64 z-40 bg-white dark:bg-gray-900">
+      <Sidebar3 />
+    </div>
+
+    {/* ✅ Main Content (push it right) */}
+    <div className="ml-64 w-full">
+      {children}
+    </div>
+
+  </div>
+)
 }
