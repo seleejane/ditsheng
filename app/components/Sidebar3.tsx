@@ -27,16 +27,17 @@ import {
 import Image from "next/image"
 import { motion } from "framer-motion"
 
-export default function Sidebar3() {
+interface MenuContentProps {
+  pathname: string
+  isActive: (path: string) => boolean
+  openSavings: boolean
+  setOpenSavings: (value: boolean) => void
+  openLoans: boolean
+  setOpenLoans: (value: boolean) => void
+}
 
-  const pathname = usePathname()
-
-  const [openSavings, setOpenSavings] = useState(true)
-  const [openLoans, setOpenLoans] = useState(false)
-
-  const isActive = (path:string) => pathname === path
-
-  const MenuContent = () => (
+function MenuContent({ pathname, isActive, openSavings, setOpenSavings, openLoans, setOpenLoans }: MenuContentProps) {
+  return (
 
     <div className="w-64 min-h-screen bg-gradient-to-b from-blue-700 via-green-600 to-green-700 text-white pl-4 pt-4">
 
@@ -90,32 +91,32 @@ export default function Sidebar3() {
 
         <div className="ml-5 space-y-1">
 
-            <Link href="/savings/ordinary"
-                className={`flex items-center gap-3 p-2 rounded ${isActive("/savings/ordinary") ? "bg-orange-500" : "hover:bg-white/20"}`}>
+            <Link href="/dashboard/products/ordinary-savings"
+                className={`flex items-center gap-3 p-2 rounded ${isActive("/dashboard/products/ordinary-savings") ? "bg-orange-500" : "hover:bg-white/20"}`}>
                 <ArrowRight size={16}/>
                 Ordinary Savings
             </Link>
 
-            <Link href="/savings/moletlo"
-                className={`flex items-center gap-3 p-2 rounded ${isActive("/savings/moletlo") ? "bg-orange-500" : "hover:bg-white/20"}`}>
+            <Link href="/dashboard/products/moletlo-savings"
+                className={`flex items-center gap-3 p-2 rounded ${isActive("/dashboard/products/moletlo-savings") ? "bg-orange-500" : "hover:bg-white/20"}`}>
                 <ArrowRight size={16}/>
                 Moletlo Savings
             </Link>
 
-            <Link href="/savings/lefika"
-                className={`flex items-center gap-3 p-2 rounded ${isActive("/savings/lefika") ? "bg-orange-500" : "hover:bg-white/20"}`}>
+            <Link href="/dashboard/products/lefika-savings"
+                className={`flex items-center gap-3 p-2 rounded ${isActive("/dashboard/products/lefika-savings") ? "bg-orange-500" : "hover:bg-white/20"}`}>
                 <ArrowRight size={16}/>
                 Lefika Savings
             </Link>
 
-            <Link href="/savings/bojanala"
-                className={`flex items-center gap-3 p-2 rounded ${isActive("/savings/bojanala") ? "bg-orange-500" : "hover:bg-white/20"}`}>
+            <Link href="/dashboard/products/bojanala-savings"
+                className={`flex items-center gap-3 p-2 rounded ${isActive("/dashboard/products/bojanala-savings") ? "bg-orange-500" : "hover:bg-white/20"}`}>
                 <ArrowRight size={16}/>
                 Bojanala Savings
             </Link>
 
-            <Link href="/savings/retirement"
-                className={`flex items-center gap-3 p-2 rounded ${isActive("/savings/retirement") ? "bg-orange-500" : "hover:bg-white/20"}`}>
+            <Link href="/dashboard/products/retirement-savings"
+                className={`flex items-center gap-3 p-2 rounded ${isActive("/dashboard/products/retirement-savings") ? "bg-orange-500" : "hover:bg-white/20"}`}>
                 <ArrowRight size={16}/>
                 Retirement Savings
             </Link>
@@ -197,17 +198,27 @@ export default function Sidebar3() {
             Airtime Scheme
         </Link>
 
-     </nav>
-    </div>
-  )
-
-  return (
+       </nav>
+      </div>
+    )
+  }
+  
+  export default function Sidebar3() {
+  
+    const pathname = usePathname()
+  
+    const [openSavings, setOpenSavings] = useState(true)
+    const [openLoans, setOpenLoans] = useState(false)
+  
+    const isActive = (path:string) => pathname === path
+  
+    return (
 
     <>
 
       {/* MOBILE MENU */}
      
-      <div className="lg:hidden p-3 border-b flex justify-between items-center">
+      <div className="p-3 border-b flex justify-between items-center lg:hidden">
 
         <h2 className="text-lg font-bold">
           Dashboard
@@ -223,7 +234,7 @@ export default function Sidebar3() {
 
           <SheetContent side="left" className="p-0 bg-gradient-to-b from-blue-900 via-green-700 to-green-900 text-white max-w-xs">
 
-            <MenuContent/>
+            <MenuContent pathname={pathname} isActive={isActive} openSavings={openSavings} setOpenSavings={setOpenSavings} openLoans={openLoans} setOpenLoans={setOpenLoans} />
 
           </SheetContent>
 
@@ -237,7 +248,7 @@ export default function Sidebar3() {
 
       <div className="hidden lg:block">
 
-        <MenuContent/>
+        <MenuContent pathname={pathname} isActive={isActive} openSavings={openSavings} setOpenSavings={setOpenSavings} openLoans={openLoans} setOpenLoans={setOpenLoans} />
 
       </div>
 

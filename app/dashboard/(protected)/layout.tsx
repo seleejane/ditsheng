@@ -1,44 +1,25 @@
-import React from 'react'
-import Sidebar3 from '../../components/Sidebar3';
-
-
 // app/(protected)/layout.tsx
-import { auth, currentUser } from "@clerk/nextjs/server"
-import { redirect } from "next/navigation"
-import { syncUser } from "@/lib/actions/users"
 
-export default async function RootLayout({
+import Sidebar3 from "@/app/components/Sidebar3";
+
+export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
-  const { userId } = await auth()
-
-  if (!userId) {
-    redirect("/sign-in")
-  }
-
-  const clerkUser = await currentUser()
-
-  if (!clerkUser) {
-    redirect("/sign-in")
-  }
-
-  await syncUser()
-
   return (
-  <div className="flex w-full">
-    
-    {/* ✅ Fixed Sidebar */}
-    <div className="lg:fixed top-0 left-0 h-screen w-64 z-40 bg-white dark:bg-gray-900">
-      <Sidebar3 />
-    </div>
+    <div className="h-screen flex overflow-hidden">
 
-    {/* ✅ Main Content (push it right) */}
-    <div className="lg:ml-64 w-full">
-      {children}
-    </div>
+      {/* SIDEBAR */}
+      <div className="w-64 h-full overflow-y-auto bg-gray-900 text-white">
+        <Sidebar3 />
+      </div>
 
-  </div>
-)
+      {/* MAIN CONTENT */}
+      <div className="flex-1 h-full overflow-y-auto bg-gray-100">
+        {children}
+      </div>
+
+    </div>
+  );
 }
