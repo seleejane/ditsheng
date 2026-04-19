@@ -1,9 +1,6 @@
 // lib/validation/kycSchema.ts
 import { z } from "zod";
 
-
-import { z } from "zod";
-
 export const kycSchema = z.object({
   nationalId: z.string().min(1),
 
